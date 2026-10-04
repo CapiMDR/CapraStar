@@ -19,7 +19,7 @@ You can also [challenge CapraStar on Lichess](https://lichess.org/@/CapraStar).
 > <li> From Position </li>
 > </ul>
 >
-> In Bullet, Blitz and Rapid time controls.
+> In Bullet, Blitz, and Rapid time controls.
 
 ---
 
@@ -53,6 +53,7 @@ You can also [challenge CapraStar on Lichess](https://lichess.org/@/CapraStar).
 ### Browser client
 
 - Interactive p5.js chessboard with piece, sound, and board-theme assets
+- Responsive UI for mobile devices
 - Play locally against the AI or use the board for two-player games
 - Independently configurable clocks and increments for white and black
 - Analysis panel showing the best move, evaluation, depth, nodes, time, and principal variation in real-time
@@ -127,21 +128,22 @@ CapraStar/
              ▼                               ▼
    ┌──────────────────┐            ┌──────────────────┐
    │ src/ui           │            │ src/worker       │
-   │ Input, board, UI │◀──────────▶│ CapraWorker.js   │
+   │ Input, board, UI │◀─────────▶│ CapraWorker.js   │
    └──────────────────┘  messages  └────────┬─────────┘
-                                             │
-                         ┌───────────────────┴───────────────────┐
-                         ▼                                       ▼
+                                            │
+                         ┌──────────────────┴───────────────────┐
+                         ▼                                      ▼
                ┌──────────────────┐                    ┌──────────────────┐
                │ src/chess        │                    │ src/engine       │
                │ Rules and state  │                    │ Search/evaluation│
                └──────────────────┘                    └──────────────────┘
-                                                                     ▲
-                                                                     │
-                                                        ┌────────────┴───────────┐
-                                                        │ src/uci/UCI.js         │
-                                                        │ Node.js UCI interface  │
-                                                        └────────────────────────┘
+                                                                 ▲
+                                                                 │
+                                                        ┌────────┴───────────┐
+                                                        │ src/uci/UCI.js     │
+                                                        │ Node.js UCI        │
+                                                        │ interface          │
+                                                        └────────────────────┘
 ```
 
 ---
