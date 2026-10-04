@@ -1,0 +1,112 @@
+<div class="imageContainer"><img src="public/assets/images/Logo.png" alt="Logo" width="200" height="200" /></div>
+<b>About</b>
+<p>This sketch is a chess interface powered by p5.js for the CapraChess engine.</p>
+<p>Play local games with 2 players or against the CapraStar AI with an estimated 1900+ elo.</p>
+<a href="https://lichess.org/@/CapraStar" target="_blank">Challenge it on Lichess!</a>
+<p>
+  <i style="color: rgb(179, 179, 179)">*If the link doesn't work, try copying and pasting it into your browser: </i>
+  <i style="color: rgb(179, 179, 179); user-select: all">https://lichess.org/@/CapraStar</i>
+</p>
+
+<br />
+<hr />
+<b>Getting Started</b>
+
+<p>Press the ▶ button to begin a new game from any board position.</p>
+
+<p>Move pieces by clicking and dragging them on the board. All legal moves and rules are validated automatically.</p>
+<ul class="controls-list">
+  <li>
+    <span class="hint-icon material-symbols-outlined"> draw </span>
+    <div><b>Annotation</b> – Right-click and drag on the board to add annotation arrows and circles.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-symbols-outlined"> navigation </span>
+    <div><b>Game navigation</b> – Click on the moves in the list to navigate through the game.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-symbols-outlined"> move_selection_right </span>
+    <div><b>Premoves</b> – Click and drag to make premoves while waiting on the AI. Right click to clear the queue.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-symbols-outlined"> bar_chart_4_bars </span>
+    <div><b>Analysis</b> – After the game you can navigate through alternate lines of play for analysis.</div>
+  </li>
+</ul>
+<hr />
+<b>Controls</b>
+
+<ul class="controls-list">
+  <li>
+    <span class="hint-icon material-icons">lightbulb</span>
+    <div><b>Hint</b> – Toggles CapraStar analysis.</div>
+  </li>
+
+  <li>
+    <span class="hint-icon material-icons">skip_previous</span>
+    <div><b>Undo All</b> – Reverts to the first position of the game.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-icons">fast_rewind</span>
+    <div><b>Undo Move</b> – Reverts the most recent move played.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-icons">fast_forward</span>
+    <div><b>Redo Move</b> – Restores a move that was previously undone.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-icons">skip_next</span>
+    <div><b>Redo All</b> – Restores up to the last position of the game.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-symbols-outlined">help</span>
+    <div><b>Help</b> – Toggles this menu.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-symbols-outlined"> play_arrow </span>
+    <div><b>Restart Game</b> – Restarts the board and state of the game.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-symbols-outlined">screen_rotation_alt</span>
+    <div><b>Flip Board</b> – Rotates the board to view the position from the opposite side.</div>
+  </li>
+  <li>
+    <span class="hint-icon material-symbols-outlined"> timer </span>
+    <div>
+      <b>Time Control</b> – Allows you to choose the time control for each timer separately.
+      <p><i style="color: rgb(179, 179, 179)">*Can only be changed before the game is started.</i></p>
+    </div>
+  </li>
+</ul>
+<hr />
+<b>Position Tools</b>
+
+<ul>
+  <li><b>Get FEN</b> – Copies the current board position in Forsyth-Edwards Notation (FEN) to the clipboard.</li>
+
+  <li>
+    <b>Set FEN</b> – Loads a custom position from the FEN string entered in the text field.
+    <br />
+    <p><i style="color: rgb(179, 179, 179)">*Must be used before the game is started.</i></p>
+  </li>
+
+  <li><b>Get PGN</b> – Exports the moves currently in the moves list to the clipboard in PGN format.</li>
+
+  <li>
+    <b>Set PGN</b> – Imports a PGN-formatted game for review and analysis. Copy the PGN moves list into the text field before importing (e.g. 1. e4 e5
+    2. Nf3 Nc6).
+    <br />
+    <p><i style="color: rgb(179, 179, 179)">*This will end the game automatically.</i></p>
+  </li>
+</ul>
+<hr />
+<b>AI Controls</b>
+
+<p>
+  Enable <b>White AI</b> or <b>Black AI</b> from each timer to allow CapraStar to play either side. Enable both options to watch the engine play
+  against itself.
+</p>
+<p><i style="color: rgb(179, 179, 179)">*Can only be changed before the game is started.</i></p>
+
+<b>Version CapraStar 14</b>
+<p><b>Developed by CapiMDR</b></p>

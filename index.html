@@ -1,0 +1,237 @@
+<!-- noprotect -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2b2b2b" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.8/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.8/lib/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div id="container">
+      <div id="gameRow">
+        <div id="leftColumn">
+          <div id="hintPanel" class="hintPanel">
+            <div class="hintPanelTitle">
+              Analysis
+              <button class="styledButton" id="hintBTN" onclick="getHint()" aria-pressed="false" aria-label="Toggle analysis" title="Toggle analysis">
+                <span class="material-icons">lightbulb</span>
+              </button>
+            </div>
+            <div class="hintRow">
+              <span>Best move</span>
+              <strong id="hintBestMove">-</strong>
+            </div>
+            <div class="hintRow">
+              <span>Evaluation</span>
+              <strong id="hintEvaluation">-</strong>
+            </div>
+            <div class="hintRow">
+              <span>Depth</span>
+              <strong id="hintDepth">-</strong>
+            </div>
+            <div class="hintRow">
+              <span>Nodes</span>
+              <strong id="hintNodes">-</strong>
+            </div>
+            <div class="hintRow">
+              <span>Time taken</span>
+              <strong id="timeTaken">-</strong>
+            </div>
+            <div id="hintPV" class="hintPV">-</div>
+          </div>
+          <div id="movesContainer">
+            <span class="movesLabel">Moves</span>
+            <ol id="movesList"></ol>
+          </div>
+          <div id="moveBTNS">
+            <button
+              class="styledButton btn-large"
+              id="firstPositionBTN"
+              onclick="goToFirstPosition()"
+              aria-label="Go to first position"
+              title="Go to first position"
+              disabled
+            >
+              <span class="material-icons">skip_previous</span>
+            </button>
+            <button class="styledButton btn-large" id="undoMoveBTN" onclick="undoMove()" aria-label="Undo move" title="Undo move" disabled>
+              <span class="material-icons">fast_rewind</span>
+            </button>
+            <button class="styledButton btn-large" id="redoMoveBTN" onclick="redoMove()" aria-label="Redo move" title="Redo move" disabled>
+              <span class="material-icons">fast_forward</span>
+            </button>
+            <button
+              class="styledButton btn-large"
+              id="lastPositionBTN"
+              onclick="goToLastPosition()"
+              aria-label="Go to last position"
+              title="Go to last position"
+              disabled
+            >
+              <span class="material-icons">skip_next</span>
+            </button>
+          </div>
+        </div>
+        <div id="boardAndCaptures">
+          <div id="capturedPiecesTop" class="capturedTray"></div>
+          <div oncontextmenu="return false;" id="canvasContainer">
+            <div id="helpMenu"></div>
+            <div id="overlay"><input type="button" class="btn-start" id="playBTN" value="▶" onclick="startGame()" /></div>
+          </div>
+          <div id="capturedPiecesBottom" class="capturedTray"></div>
+        </div>
+        <div id="timerPanel">
+          <div class="timerBox black" id="blackTimerBox">
+            <span class="timerLabel">Black</span>
+            <span class="timer" id="blackTimer">-- --</span>
+            <div class="timerControls">
+              <button
+                class="timerMenuBtn black"
+                id="blackTimerBTN"
+                type="button"
+                data-color="black"
+                aria-label="Open black time controls"
+                aria-expanded="false"
+                title="Black time controls"
+              >
+                <span class="material-symbols-outlined"> timer </span>
+              </button>
+
+              <div class="AIControls">
+                <span class="timerLabel">AI</span>
+                <label class="switch" title="Toggle black AI">
+                  <input onchange="updateTimers()" type="checkbox" id="blackBotBox" checked />
+                  <span class="slider black round"></span>
+                </label>
+              </div>
+
+              <div class="timerMenu" data-color="black" role="menu" aria-label="Black time controls">
+                <button class="timerMenuOption" type="button" data-color="black" data-minutes="0.5" data-increment="0" title="Hyper bullet">
+                  <span class="material-symbols-outlined"> rocket_launch </span> 30s
+                </button>
+                <button class="timerMenuOption" type="button" data-color="black" data-minutes="1" data-increment="0" title="Bullet">
+                  <span class="material-symbols-outlined"> bolt_boost </span>1 + 0
+                </button>
+                <button class="timerMenuOption" type="button" data-color="black" data-minutes="3" data-increment="2" title="Blitz">
+                  <span class="material-symbols-outlined"> bolt </span>3 + 2
+                </button>
+                <button class="timerMenuOption" type="button" data-color="black" data-minutes="5" data-increment="3" title="Blitz">
+                  <span class="material-symbols-outlined"> acute </span>5 + 3
+                </button>
+                <button class="timerMenuOption" type="button" data-color="black" data-minutes="10" data-increment="0" title="Rapid">
+                  <span class="material-symbols-outlined"> avg_pace </span>10 + 0
+                </button>
+                <button class="timerMenuOption" type="button" data-color="black" data-minutes="15" data-increment="10" title="Rapid">
+                  <span class="material-symbols-outlined"> schedule </span>15 + 10
+                </button>
+                <button class="timerMenuOption" type="button" data-color="black" data-minutes="30" data-increment="20" title="Rapid">
+                  <span class="material-symbols-outlined"> nest_clock_farsight_analog </span>30 + 20
+                </button>
+                <button class="timerMenuOption" type="button" data-color="black" data-unlimited="true" title="Unlimited">
+                  <span class="material-symbols-outlined"> all_inclusive </span> Unlimited
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="gameStatus">Starting game...</div>
+          <div class="timerBox" id="whiteTimerBox">
+            <span class="timerLabel">White</span>
+            <span class="timer" id="whiteTimer">-- --</span>
+            <div class="timerControls">
+              <button
+                class="timerMenuBtn"
+                id="whiteTimerBTN"
+                type="button"
+                data-color="white"
+                aria-label="Open white time controls"
+                aria-expanded="false"
+                title="White time controls"
+              >
+                <span class="material-symbols-outlined"> timer </span>
+              </button>
+
+              <div class="AIControls">
+                <span class="timerLabel">AI</span>
+                <label class="switch" title="Toggle white AI">
+                  <input onchange="updateTimers()" type="checkbox" id="whiteBotBox" />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+
+              <div class="timerMenu" data-color="white" role="menu" aria-label="White time controls">
+                <button class="timerMenuOption" type="button" data-color="white" data-minutes="0.5" data-increment="0" title="Hyper bullet">
+                  <span class="material-symbols-outlined"> rocket_launch </span> 30s
+                </button>
+                <button class="timerMenuOption" type="button" data-color="white" data-minutes="1" data-increment="0" title="Bullet">
+                  <span class="material-symbols-outlined"> bolt_boost </span>1 + 0
+                </button>
+                <button class="timerMenuOption" type="button" data-color="white" data-minutes="3" data-increment="2" title="Blitz">
+                  <span class="material-symbols-outlined"> bolt </span>3 + 2
+                </button>
+                <button class="timerMenuOption" type="button" data-color="white" data-minutes="5" data-increment="3" title="Blitz">
+                  <span class="material-symbols-outlined"> acute </span>5 + 3
+                </button>
+                <button class="timerMenuOption" type="button" data-color="white" data-minutes="10" data-increment="0" title="Rapid">
+                  <span class="material-symbols-outlined"> avg_pace </span>10 + 0
+                </button>
+                <button class="timerMenuOption" type="button" data-color="white" data-minutes="15" data-increment="10" title="Rapid">
+                  <span class="material-symbols-outlined"> schedule </span>15 + 10
+                </button>
+                <button class="timerMenuOption" type="button" data-color="white" data-minutes="30" data-increment="20" title="Rapid">
+                  <span class="material-symbols-outlined"> nest_clock_farsight_analog </span>30 + 20
+                </button>
+                <button class="timerMenuOption" type="button" data-color="white" data-unlimited="true" title="Unlimited">
+                  <span class="material-symbols-outlined"> all_inclusive </span> Unlimited
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="UIRow">
+        <button class="styledButton" id="helpBTN" onclick="toggleHelpMenu()" aria-label="Toggle help menu" title="Toggle help menu">
+          <span class="material-symbols-outlined">help</span>
+        </button>
+        <button class="styledButton" id="restartBTN" onclick="restartGame()" aria-label="Restart game" title="Restart game">
+          <span class="material-symbols-outlined"> play_arrow </span>
+        </button>
+        <button class="styledButton" id="flipBTN" onclick="flipGame()" aria-label="Flip board" title="Flip board">
+          <span class="material-symbols-outlined"> screen_rotation_alt </span>
+        </button>
+        <input type="search" class="styledTextField" id="textTXT" />
+        <input type="button" class="styledButton" id="getFenBTN" value="Get FEN" onclick="getFEN()" aria-label="Get FEN" title="Get FEN" />
+        <input type="button" class="styledButton" id="setFenBTN" value="Set FEN" onclick="setFEN()" aria-label="Set FEN" title="Set FEN" />
+        <input type="button" class="styledButton" id="getPgnBTN" value="Get PGN" onclick="getPGN()" aria-label="Get PGN" title="Get PGN" />
+        <input type="button" class="styledButton" id="setPgnBTN" value="Set PGN" onclick="setPGN()" aria-label="Set PGN" title="Set PGN" />
+      </div>
+    </div>
+    <script src="src/ui/sketch.js"></script>
+    <script src="src/ui/Menu.js"></script>
+    <script src="src/chess/Perft.js"></script>
+    <script src="src/chess/Constants.js"></script>
+    <script src="src/chess/Piece.js"></script>
+    <script src="src/chess/Zobrist.js"></script>
+    <script src="src/chess/Board.js"></script>
+    <script src="src/chess/Move.js"></script>
+    <script src="src/chess/GameState.js"></script>
+    <script src="src/chess/BoardUtil.js"></script>
+    <script src="src/chess/BBUtil.js"></script>
+    <script src="src/chess/MoveGenerator.js"></script>
+    <script src="src/ui/Engine.js"></script>
+    <script src="src/ui/PremoveQueue.js"></script>
+    <script src="src/ui/BoardAnnotations.js"></script>
+    <script src="src/ui/Input.js"></script>
+    <script src="src/ui/Timer.js"></script>
+    <script src="src/ui/GameUIController.js"></script>
+    <script src="src/chess/OpeningBook.js"></script>
+  </body>
+</html>

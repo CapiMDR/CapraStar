@@ -1,0 +1,8 @@
+{
+  "name": "caprastar",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "uci": "node src/uci/UCI.js"
+  }
+}
