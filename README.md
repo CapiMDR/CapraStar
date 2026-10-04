@@ -188,7 +188,7 @@ quit
 
 ## Historical Versions
 
-Historical CapraStar snapshots live in [`archive/`](archive/README.md). The active engine is in [`src/engine/`](src/engine/).
+Historical CapraStar snapshots live in [`archive/`](archive/). The active engine is in [`src/engine/`](src/engine/).
 
 ---
 
