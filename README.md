@@ -18,6 +18,7 @@ You can also [challenge CapraStar on Lichess](https://lichess.org/@/CapraStar).
 > <li> Standard </li>
 > <li> From Position </li>
 > </ul>
+>
 > In Bullet, Blitz and Rapid time controls.
 
 ---
@@ -46,6 +47,7 @@ You can also [challenge CapraStar on Lichess](https://lichess.org/@/CapraStar).
 - Handcrafted evaluation terms and iterative deepening search
 - Principal variation search, and history and killer-move heuristics
 - Null move pruning, futility pruning and aspiration windows
+- Default parameters tuned with SPSA and tested with SPRT
 - Opening-book support
 
 ### Browser client
@@ -169,8 +171,9 @@ The engine will wait for UCI commands on standard input. For a quick manual chec
 ```text
 uci
 isready
+ucinewgame
 position startpos
-go depth 8
+go movetime 1000
 quit
 ```
 
